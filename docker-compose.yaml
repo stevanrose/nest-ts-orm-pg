@@ -1,0 +1,31 @@
+version: '3.8'
+volumes:
+  nest_type_orm_data:
+    driver: local
+services:
+  nest_postgres_type_orm:
+    image: postgres
+    volumes:
+      - nest_type_orm_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: nest_type_orm_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5450:5432'
+    networks:
+      - nest_type-orm-network
+  pgadmin:
+    container_name: nest_type_orm_admin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - '5050:80'
+    networks:
+      - nest_type-orm-network
+networks:
+  nest_type-orm-network:
+    name: nest_type-orm-network
