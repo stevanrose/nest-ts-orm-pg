@@ -6,6 +6,6 @@ export class SearchReportDto {
   dateOfBirth: Date;
   countryOfLoss: string;
   status: string;
-  type: string;
+  reportType: string;
   workStream: string;
 }

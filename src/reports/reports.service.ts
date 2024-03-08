@@ -22,13 +22,19 @@ export class ReportsService {
     report.dateOfBirth = createReportDto.dateOfBirth;
     report.countryOfLoss = createReportDto.countryOfLoss;
     report.status = createReportDto.status;
-    report.type = createReportDto.type;
+    report.reportType = createReportDto.reportType;
     report.workStream = createReportDto.workStream;
+    report.metaData = createReportDto.metaData;
+    report.reportData = createReportDto.reportData;
     return this.reportRepository.save(report);
   }
 
   async findAll(): Promise<Report[]> {
-    return await this.reportRepository.find();
+    return await this.reportRepository.find({
+      order: {
+        createdDate: 'DESC',
+      },
+    });
   }
 
   async findOne(id: number): Promise<Report> {
@@ -48,7 +54,7 @@ export class ReportsService {
       dateOfBirth,
       countryOfLoss,
       status,
-      type,
+      reportType,
       workStream,
     } = searchReportDto;
 
@@ -83,9 +89,9 @@ export class ReportsService {
         workStream: workStream,
       });
     }
-    if (type) {
-      qb.andWhere('type = :type', {
-        type: type,
+    if (reportType) {
+      qb.andWhere('reportType = :reportType', {
+        reportType: reportType,
       });
     }
     return qb.getMany();
@@ -98,8 +104,10 @@ export class ReportsService {
       dateOfBirth,
       countryOfLoss,
       status,
-      type,
+      reportType,
       workStream,
+      metaData,
+      reportData,
     } = updateReportDto;
 
     await this.reportRepository.update(
@@ -110,8 +118,10 @@ export class ReportsService {
         dateOfBirth,
         countryOfLoss,
         status,
-        type,
+        reportType,
         workStream,
+        metaData,
+        reportData,
       },
     );
     const found = await this.reportRepository.findOneBy({ id: id });

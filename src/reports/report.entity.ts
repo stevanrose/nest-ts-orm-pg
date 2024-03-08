@@ -14,7 +14,7 @@ export class Report {
   @Column()
   reference: string;
 
-  @Column()
+  @Column({ name: 'business-key' })
   businessKey: string;
 
   @Column()
@@ -32,11 +32,17 @@ export class Report {
   @Column()
   status: string;
 
-  @Column()
-  type: string;
+  @Column({ name: 'report-type' })
+  reportType: string;
 
-  @Column()
+  @Column({ name: 'work-stream' })
   workStream: string;
+
+  @Column('jsonb', { name: 'meta-data', nullable: false, default: {} })
+  metaData: string;
+
+  @Column('jsonb', { name: 'report-data', nullable: false, default: {} })
+  reportData: string;
 
   @CreateDateColumn()
   createdDate: Date;

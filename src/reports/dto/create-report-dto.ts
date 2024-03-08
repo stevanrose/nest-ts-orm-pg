@@ -23,8 +23,14 @@ export class CreateReportDto {
   status: string;
 
   @IsIn(['Adult', 'Child', 'Third-Party'])
-  type: string;
+  reportType: string;
 
   @IsIn(['Central', 'TP'])
   workStream: string;
+
+  @IsNotEmpty()
+  metaData: string;
+
+  @IsNotEmpty()
+  reportData: string;
 }

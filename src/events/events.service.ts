@@ -26,7 +26,11 @@ export class EventsService {
   }
 
   async findAll(): Promise<Event[]> {
-    return await this.eventsRepository.find();
+    return await this.eventsRepository.find({
+      order: {
+        createdDate: 'DESC',
+      },
+    });
   }
 
   async findOne(id: number): Promise<Event> {
