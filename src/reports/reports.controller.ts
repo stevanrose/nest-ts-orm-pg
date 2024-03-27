@@ -7,6 +7,8 @@ import {
   Patch,
   Post,
   ParseIntPipe,
+  DefaultValuePipe,
+  Query,
 } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { CreateReportDto } from './dto/create-report-dto';
@@ -24,9 +26,18 @@ export class ReportsController {
     return this.reportsService.create(createReportDto);
   }
 
+  @Get('count')
+  getCount(): Promise<number> {
+    return this.reportsService.getCount();
+  }
+
   @Get()
-  findAll(): Promise<Report[]> {
-    return this.reportsService.findAll();
+  findAll(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('take', new DefaultValuePipe(25), ParseIntPipe) take: number,
+  ): Promise<Report[]> {
+    console.log(`Finding all with skip: ${skip}, take: ${take}`);
+    return this.reportsService.findAll(skip, take);
   }
 
   @Get(':id')

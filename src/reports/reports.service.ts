@@ -29,8 +29,14 @@ export class ReportsService {
     return this.reportRepository.save(report);
   }
 
-  async findAll(): Promise<Report[]> {
+  async getCount(): Promise<number> {
+    return await this.reportRepository.createQueryBuilder('report').getCount();
+  }
+
+  async findAll(skip: number, take: number): Promise<Report[]> {
     return await this.reportRepository.find({
+      skip: skip,
+      take: take,
       order: {
         createdDate: 'DESC',
       },

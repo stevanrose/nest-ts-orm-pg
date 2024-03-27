@@ -6,6 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportsModule } from './reports/reports.module';
 import { EventsModule } from './events/events.module';
+import { LoststolenreportModule } from './loststolenreport/loststolenreport.module';
+import { TeamModule } from './team/team.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { EventsModule } from './events/events.module';
     }),
     ReportsModule,
     EventsModule,
+    LoststolenreportModule,
+    TeamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
